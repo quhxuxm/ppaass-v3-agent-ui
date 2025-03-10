@@ -1,8 +1,8 @@
 [package]
 name = "ppaass-v3-agent-ui-backend"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Ppaass V3 Agent UI Backend"
+authors = ["Hao Qu"]
 edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

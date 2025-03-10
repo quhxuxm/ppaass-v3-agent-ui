@@ -2,7 +2,7 @@
 target = "./index.html"
 
 [watch]
-ignore = ["./ui-backend"]
+ignore = ["./backend"]
 
 [serve]
 port = 1420
