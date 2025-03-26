@@ -8,8 +8,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9bc6eef-e848-45d7-9a60-14079badf551" name="Changes" comment="add">
-      <change beforePath="$PROJECT_DIR$/.idea/ppaass-v3-agent-ui.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.taurignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Trunk.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/build.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/capabilities/default.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/128x128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/128x128@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/32x32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square107x107Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square142x142Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square150x150Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square284x284Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square30x30Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square310x310Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square44x44Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square71x71Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/Square89x89Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/StoreLogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/icon.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/icons/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/tauri.conf.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/tauri.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/yew.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,17 +57,49 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="FkbVIiQm" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2ur6CxROdFhjz0W1m0jPGlW4TYF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "main",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true"
+    "last_opened_file_path": "D:/Workspace/ppaass-v3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$PROJECT_DIR$/../../Software/.cargo/bin" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9bc6eef-e848-45d7-9a60-14079badf551" name="Changes" comment="add" />
+      <created>1742994221677</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742994221677</updated>
+      <workItem from="1742994222937" duration="624000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add" />
