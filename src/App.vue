@@ -107,7 +107,7 @@ const setChartOptions = () => {
 <template>
     <main
         class="m-1 min-w-100 flex flex-col">
-        <Panel class="m-3 min-w-100 max-w-130" header="User Information"
+        <Panel class="m-3 min-w-100 max-w-130" header="User information"
                toggleable>
             <div class="flex flex-row justify-items-center items-center">
                 <Avatar class="mr-3" icon="pi pi-user"
@@ -120,7 +120,7 @@ const setChartOptions = () => {
             </div>
 
         </Panel>
-        <Panel class="m-3 min-w-100 max-w-130" header="User Configuration"
+        <Panel class="m-3 min-w-100 max-w-130" header="User configuration"
                toggleable>
             <FloatLabel class="w-full" variant="on">
                 <Select id="select_user" :options="userSelectOptions"
@@ -134,7 +134,7 @@ const setChartOptions = () => {
         </Panel>
 
         <Panel class="m-3 min-w-100 max-w-130"
-               header="Connection Configuration" toggleable>
+               header="Connection configuration" toggleable>
             <div>
                 <FloatLabel class="w-full" variant="on">
                     <InputText id="agent_server_port"
