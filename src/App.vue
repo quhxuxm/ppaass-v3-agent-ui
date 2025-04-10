@@ -107,32 +107,34 @@ const setChartOptions = () => {
 <template>
     <main
         class="m-1 min-w-100 flex flex-col">
-        <Panel class="m-3 min-w-100" header="User Information">
+        <Panel class="m-3 min-w-100 max-w-130" header="User Information"
+               toggleable>
             <div class="flex flex-row justify-items-center items-center">
                 <Avatar class="mr-3" icon="pi pi-user"
                         size="xlarge"/>
                 <div
                     class="flex flex-col">
-                    <div>Remote server</div>
+                    <div class="uppercase font-bold">Remote server</div>
                     <div>127.0.0.1:10080</div>
                 </div>
             </div>
 
         </Panel>
-        <Panel class="m-3 min-w-100" header="User Configuration">
+        <Panel class="m-3 min-w-100 max-w-130" header="User Configuration"
+               toggleable>
             <FloatLabel class="w-full" variant="on">
                 <Select id="select_user" :options="userSelectOptions"
                         class="w-full">
                     <template #dropdownicon>
-                        <i class="pi pi-map"/>
+                        <i class="pi pi-user"/>
                     </template>
                 </Select>
                 <label for="select_user">Select a user</label>
             </FloatLabel>
         </Panel>
 
-        <Panel class="m-3 min-w-100"
-               header="Connection Configuration">
+        <Panel class="m-3 min-w-100 max-w-130"
+               header="Connection Configuration" toggleable>
             <div>
                 <FloatLabel class="w-full" variant="on">
                     <InputText id="agent_server_port"
@@ -149,7 +151,7 @@ const setChartOptions = () => {
                     <Select id="max_log_level" :options="logLevels"
                             class="w-full mt-3 mb-3">
                         <template #dropdownicon>
-                            <i class="pi pi-map"/>
+                            <i class="pi pi-sliders-h"/>
                         </template>
                     </Select>
                     <label for="max_log_level">Max log level</label>
@@ -157,7 +159,7 @@ const setChartOptions = () => {
 
             </div>
         </Panel>
-        <Panel class="m-3 min-w-100 break-before-column"
+        <Panel class="m-3 min-w-100 max-w-130"
                header="Connection pool configuration" toggleable>
             <div>
                 <FloatLabel class="w-full mt-3 mb-3" variant="on">
@@ -180,12 +182,13 @@ const setChartOptions = () => {
         </Panel>
 
 
-        <Panel class="m-3 min-w-100" header="Download/Upload speed">
+        <Panel class="m-3 min-w-100 max-w-130 "
+               header="Download/Upload speed"
+               toggleable>
             <Chart :data="chartData" :options="chartOptions"
-                   class="speed-chart"
-                   type="line"/>
+                   class="w-full h-[20rem]" type="line"/>
         </Panel>
-        <Panel class="m-3 min-w-100" header="Log console">
+        <Panel class="m-3 min-w-100 max-w-130" header="Log console" toggleable>
             <DataTable :value="logMessages">
                 <Column field="code" header="Code"></Column>
                 <Column field="name" header="Name"></Column>
@@ -195,12 +198,12 @@ const setChartOptions = () => {
 
         </Panel>
 
-        <Panel class="m-3 min-w-100">
-            <div class="flex justify-start items-center content-center gap-4">
-                <Button label="Start"></Button>
-                <Button label="Stop"></Button>
-                <Button
-                    label="Import user"></Button>
+        <Panel class="m-3 min-w-100 max-w-130 ">
+            <div class="flex justify-center items-center content-center gap-4">
+                <Button class="w-29 uppercase" label="Start"></Button>
+                <Button class="w-29 uppercase" label="Stop"></Button>
+                <Button class="w-36 uppercase"
+                        label="Import user"></Button>
             </div>
         </Panel>
 

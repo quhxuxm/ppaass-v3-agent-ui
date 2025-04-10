@@ -13,8 +13,9 @@
     "windows": [
       {
         "title": "ppaass-v3-agent-ui",
-        "width": 800,
-        "height": 600
+        "resizable": false,
+        "width": 500,
+        "height": 800
       }
     ],
     "security": {
