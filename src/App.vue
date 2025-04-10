@@ -4,13 +4,15 @@ import {
     Button,
     DataTable,
     FloatLabel,
-    InputText,
+    InputNumber,
     Panel,
     Select
 } from "primevue";
 import Chart from "primevue/chart";
 import {onMounted, ref} from "vue";
 import Column from 'primevue/column';
+import {UserInfo} from "./bo/user.ts";
+import {LogLevel} from "./bo/common.ts";
 
 // optional
 interface LogMessage {
@@ -20,8 +22,7 @@ interface LogMessage {
     quantity: number;
 }
 
-let userSelectOptions: string[] = ["user1", "user2", "user3"];
-let logLevels: string[] = ["INFO", "WARNING", "ERROR", "DEBUG"];
+let userSelectOptions: UserInfo[] = [];
 onMounted(() => {
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
@@ -137,18 +138,21 @@ const setChartOptions = () => {
                header="Connection configuration" toggleable>
             <div>
                 <FloatLabel class="w-full" variant="on">
-                    <InputText id="agent_server_port"
-                               class="w-full mt-3 mb-3"></InputText>
+                    <InputNumber id="agent_server_port"
+                                 :max="65535" :min="1" :useGrouping="false"
+                                 class="w-full mt-3 mb-3"></InputNumber>
                     <label for="agent_server_port">Agent server port</label>
                 </FloatLabel>
                 <FloatLabel class="w-full" variant="on">
-                    <InputText id="worker_thread_number"
-                               class="w-full mt-3 mb-3"></InputText>
+                    <InputNumber id="worker_thread_number"
+                                 :max="65535" :min="1" :useGrouping="false"
+                                 class="w-full mt-3 mb-3"></InputNumber>
                     <label for="worker_thread_number">Worker thread
                         number</label>
                 </FloatLabel>
                 <FloatLabel class="w-full" variant="on">
-                    <Select id="max_log_level" :options="logLevels"
+                    <Select id="max_log_level"
+                            :options="[LogLevel.ERROR, LogLevel.INFO, LogLevel.WARNING, LogLevel.DEBUG]"
                             class="w-full mt-3 mb-3">
                         <template #dropdownicon>
                             <i class="pi pi-sliders-h"/>
@@ -163,18 +167,21 @@ const setChartOptions = () => {
                header="Connection pool configuration" toggleable>
             <div>
                 <FloatLabel class="w-full mt-3 mb-3" variant="on">
-                    <InputText id="max_pool_size"
-                               class="w-full"></InputText>
+                    <InputNumber id="max_pool_size"
+                                 :max="65535" :min="1" :useGrouping="false"
+                                 class="w-full"></InputNumber>
                     <label for="max_pool_size">Max pool size</label>
                 </FloatLabel>
                 <FloatLabel class="w-full mt-3 mb-3" variant="on">
-                    <InputText id="fill_interval"
-                               class="w-full"></InputText>
+                    <InputNumber id="fill_interval"
+                                 :max="60" :min="0" :useGrouping="false"
+                                 class="w-full"></InputNumber>
                     <label for="fill_interval">Fill interval</label>
                 </FloatLabel>
                 <FloatLabel class="w-full mt-3 mb-3" variant="on">
-                    <InputText id="check_interval"
-                               class="w-full"></InputText>
+                    <InputNumber id="check_interval"
+                                 :max="60" :min="0" :useGrouping="false"
+                                 class="w-full"></InputNumber>
                     <label for="check_interval">Check interval</label>
                 </FloatLabel>
 
