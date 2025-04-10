@@ -1,20 +1,209 @@
 <script lang="ts" setup>
-import {Button, Fieldset, InputText, Panel} from "primevue";
+import {
+    Avatar,
+    Button,
+    DataTable,
+    FloatLabel,
+    InputText,
+    Panel,
+    Select
+} from "primevue";
+import Chart from "primevue/chart";
+import {onMounted, ref} from "vue";
+import Column from 'primevue/column';
+
+// optional
+interface LogMessage {
+    code: string;
+    name: string;
+    category: string;
+    quantity: number;
+}
+
+let userSelectOptions: string[] = ["user1", "user2", "user3"];
+let logLevels: string[] = ["INFO", "WARNING", "ERROR", "DEBUG"];
+onMounted(() => {
+    chartData.value = setChartData();
+    chartOptions.value = setChartOptions();
+    logMessages.value = [{
+        code: "code1",
+        name: "name1",
+        category: "category1",
+        quantity: 1
+    }, {
+        code: "code1",
+        name: "name1",
+        category: "category1",
+        quantity: 1
+    }, {
+        code: "code1",
+        name: "name1",
+        category: "category1",
+        quantity: 1
+    }];
+});
+const chartData = ref();
+const chartOptions = ref();
+const logMessages = ref<LogMessage[]>();
+const setChartData = () => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    return {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'First Dataset',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
+                tension: 0.4
+            },
+            {
+                label: 'Second Dataset',
+                data: [28, 48, 40, 19, 86, 27, 90],
+                fill: false,
+                borderColor: documentStyle.getPropertyValue('--p-gray-500'),
+                tension: 0.4
+            }
+        ]
+    };
+};
+const setChartOptions = () => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--p-text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
+    const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+    return {
+        maintainAspectRatio: false,
+        aspectRatio: 0.6,
+        plugins: {
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder
+                }
+            },
+            y: {
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder
+                }
+            }
+        }
+    };
+}
 </script>
 
 <template>
-    <main>
-        <h1>Ppaass Agent</h1>
-        <Fieldset legend="SERVER CONFIGURATION">
-            <InputText placeholder="Port number"></InputText>
-            <InputText placeholder="Thread number"></InputText>
-        </Fieldset>
-        <Fieldset legend="CONNECTION POOL CONFIGURATION">
-            <InputText placeholder="Connection number"></InputText>
-        </Fieldset>
-        <Panel>
-            <Button label="START"></Button>
+    <main
+        class="m-1 min-w-100 flex flex-col">
+        <Panel class="m-3 min-w-100" header="User Information">
+            <div class="flex flex-row justify-items-center items-center">
+                <Avatar class="mr-3" icon="pi pi-user"
+                        size="xlarge"/>
+                <div
+                    class="flex flex-col">
+                    <div>Remote server</div>
+                    <div>127.0.0.1:10080</div>
+                </div>
+            </div>
+
         </Panel>
+        <Panel class="m-3 min-w-100" header="User Configuration">
+            <FloatLabel class="w-full" variant="on">
+                <Select id="select_user" :options="userSelectOptions"
+                        class="w-full">
+                    <template #dropdownicon>
+                        <i class="pi pi-map"/>
+                    </template>
+                </Select>
+                <label for="select_user">Select a user</label>
+            </FloatLabel>
+        </Panel>
+
+        <Panel class="m-3 min-w-100"
+               header="Connection Configuration">
+            <div>
+                <FloatLabel class="w-full" variant="on">
+                    <InputText id="agent_server_port"
+                               class="w-full mt-3 mb-3"></InputText>
+                    <label for="agent_server_port">Agent server port</label>
+                </FloatLabel>
+                <FloatLabel class="w-full" variant="on">
+                    <InputText id="worker_thread_number"
+                               class="w-full mt-3 mb-3"></InputText>
+                    <label for="worker_thread_number">Worker thread
+                        number</label>
+                </FloatLabel>
+                <FloatLabel class="w-full" variant="on">
+                    <Select id="max_log_level" :options="logLevels"
+                            class="w-full mt-3 mb-3">
+                        <template #dropdownicon>
+                            <i class="pi pi-map"/>
+                        </template>
+                    </Select>
+                    <label for="max_log_level">Max log level</label>
+                </FloatLabel>
+
+            </div>
+        </Panel>
+        <Panel class="m-3 min-w-100 break-before-column"
+               header="Connection pool configuration" toggleable>
+            <div>
+                <FloatLabel class="w-full mt-3 mb-3" variant="on">
+                    <InputText id="max_pool_size"
+                               class="w-full"></InputText>
+                    <label for="max_pool_size">Max pool size</label>
+                </FloatLabel>
+                <FloatLabel class="w-full mt-3 mb-3" variant="on">
+                    <InputText id="fill_interval"
+                               class="w-full"></InputText>
+                    <label for="fill_interval">Fill interval</label>
+                </FloatLabel>
+                <FloatLabel class="w-full mt-3 mb-3" variant="on">
+                    <InputText id="check_interval"
+                               class="w-full"></InputText>
+                    <label for="check_interval">Check interval</label>
+                </FloatLabel>
+
+            </div>
+        </Panel>
+
+
+        <Panel class="m-3 min-w-100" header="Download/Upload speed">
+            <Chart :data="chartData" :options="chartOptions"
+                   class="speed-chart"
+                   type="line"/>
+        </Panel>
+        <Panel class="m-3 min-w-100" header="Log console">
+            <DataTable :value="logMessages">
+                <Column field="code" header="Code"></Column>
+                <Column field="name" header="Name"></Column>
+                <Column field="category" header="Category"></Column>
+                <Column field="quantity" header="Quantity"></Column>
+            </DataTable>
+
+        </Panel>
+
+        <Panel class="m-3 min-w-100">
+            <div class="flex justify-start items-center content-center gap-4">
+                <Button label="Start"></Button>
+                <Button label="Stop"></Button>
+                <Button
+                    label="Import user"></Button>
+            </div>
+        </Panel>
+
     </main>
 </template>
 
@@ -22,5 +211,7 @@ import {Button, Fieldset, InputText, Panel} from "primevue";
 :root {
     margin: 0;
     padding: 0;
+    font-family: arial, helvetica, sans-serif, "Microsoft YaHei", '宋体';
 }
+
 </style>
