@@ -13,7 +13,7 @@
     "windows": [
       {
         "title": "ppaass-v3-agent-ui",
-        "resizable": false,
+        "resizable": true,
         "width": 500,
         "height": 800
       }

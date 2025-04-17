@@ -1,6 +1,10 @@
 import {LogLevel} from "./common.ts";
 
 export class DownloadSpeedInfoEvent {
+    constructor(bytesPerSecond: number) {
+        this._bytesPerSecond = bytesPerSecond;
+    }
+
     private _bytesPerSecond: number
     get bytesPerSecond(): number {
         return this._bytesPerSecond;
@@ -12,6 +16,10 @@ export class DownloadSpeedInfoEvent {
 }
 
 export class UploadSpeedInfoEvent {
+    constructor(bytesPerSecond: number) {
+        this._bytesPerSecond = bytesPerSecond;
+    }
+
     private _bytesPerSecond: number
     get bytesPerSecond(): number {
         return this._bytesPerSecond;
@@ -22,7 +30,12 @@ export class UploadSpeedInfoEvent {
     }
 }
 
-class LogInfoEvent {
+export class LogInfoEvent {
+    constructor(level: LogLevel, message: string) {
+        this._level = level;
+        this._message = message;
+    }
+
     private _level: LogLevel;
     get level(): LogLevel {
         return this._level;
@@ -30,15 +43,6 @@ class LogInfoEvent {
 
     set level(value: LogLevel) {
         this._level = value;
-    }
-
-    private _timestamp: Date;
-    get timestamp(): Date {
-        return this._timestamp;
-    }
-
-    set timestamp(value: Date) {
-        this._timestamp = value;
     }
 
     private _message: string;
