@@ -14,12 +14,45 @@ import Column from 'primevue/column';
 import {UserInfo} from "./bo/user.ts";
 import {LogLevel} from "./bo/common.ts";
 import {LogInfoEvent} from "./bo/event.ts";
+import {
+    Configuration,
+    ConnectionPoolConfiguration
+} from "./bo/configuration.ts";
 
+let agentServerPort = ref<number>(10080);
+let workerThreadNumber = ref<number>(128);
+let selectedMaxLogLevel = ref<LogLevel>(LogLevel.ERROR);
+let connectionPoolCheckInterval = ref<number>(1000);
+let connectionPoolFillInterval = ref<number>(1000);
+let connectionPoolMaxPoolSize = ref<number>(100);
+let selectedUser = ref<UserInfo>();
 let userSelectOptions: UserInfo[] = [
     new UserInfo("User1", "127.0.0.1:10080", "user1"),
     new UserInfo("User2", "127.0.0.1:10081", "user2"),
     new UserInfo("User3", "127.0.0.1:10082", "user3")
 ];
+
+function startAgent() {
+    let connectionPoolConfiguration = new ConnectionPoolConfiguration(
+        connectionPoolCheckInterval.value,
+        connectionPoolFillInterval.value,
+        connectionPoolMaxPoolSize.value,
+    );
+    let configuration = new Configuration(
+        agentServerPort.value,
+        workerThreadNumber.value,
+        selectedMaxLogLevel.value,
+        connectionPoolConfiguration
+    );
+    console.log(configuration)
+}
+
+function stopAgent() {
+}
+
+function importUsers() {
+}
+
 onMounted(() => {
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
@@ -34,14 +67,14 @@ const setChartData = () => {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
             {
-                label: 'First Dataset',
+                label: 'Download',
                 data: [65, 59, 80, 81, 56, 55, 40],
                 fill: false,
                 borderColor: documentStyle.getPropertyValue('--p-cyan-500'),
                 tension: 0.4
             },
             {
-                label: 'Second Dataset',
+                label: 'Upload',
                 data: [28, 48, 40, 19, 86, 27, 90],
                 fill: false,
                 borderColor: documentStyle.getPropertyValue('--p-gray-500'),
@@ -89,24 +122,26 @@ const setChartOptions = () => {
 
 <template>
     <main
-        class="p-3 min-w-100 grid grid-cols-1 gap-3">
+        class="p-3 min-w-120 grid grid-cols-1 gap-3">
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
             <Panel class="w-full" header="User information">
                 <div
                     class="flex flex-row flex-wrap justify-items-start items-start">
                     <Avatar class="mr-3" icon="pi pi-user"
                             size="xlarge"/>
-                    <div
-                        class="flex flex-col">
+                    <div v-if="selectedUser"
+                         class="flex flex-col">
                         <div class="uppercase font-bold">Remote server</div>
-                        <div>127.0.0.1:10080</div>
+                        <div>{{ selectedUser.proxyAddress }}</div>
                     </div>
                 </div>
             </Panel>
             <Panel class="w-full" header="User configuration">
                 <FloatLabel variant="on">
-                    <Select id="select_user" :options="userSelectOptions"
-                            class="w-full mt-3 mb-3">
+                    <Select id="select_user" v-model="selectedUser"
+                            :options="userSelectOptions"
+                            class="w-full mt-3 mb-3"
+                            option-label="nickname">
                         <template #dropdownicon>
                             <i class="pi pi-user"/>
                         </template>
@@ -116,23 +151,27 @@ const setChartOptions = () => {
             </Panel>
             <Panel class="w-full"
                    header="Connection configuration">
-
                 <FloatLabel variant="on">
-                    <InputNumber id="agent_server_port" :max="65535"
-                                 :min="1" :useGrouping="false"
+                    <InputNumber id="agent_server_port"
+                                 v-model="agentServerPort"
+                                 :max="65535" :min="1"
+                                 :useGrouping="false"
                                  class="w-full mt-3 mb-3"
                     ></InputNumber>
                     <label for="agent_server_port">Agent server port</label>
                 </FloatLabel>
                 <FloatLabel variant="on">
                     <InputNumber id="worker_thread_number"
-                                 :max="65535" :min="1" :useGrouping="false"
+                                 v-model="workerThreadNumber" :max="65535"
+                                 :min="1"
+                                 :useGrouping="false"
                                  class="w-full mt-3 mb-3"></InputNumber>
                     <label for="worker_thread_number">Worker thread
                         number</label>
                 </FloatLabel>
                 <FloatLabel variant="on">
                     <Select id="max_log_level"
+                            v-model="selectedMaxLogLevel"
                             :options="[LogLevel.ERROR, LogLevel.INFO, LogLevel.WARNING, LogLevel.DEBUG]"
                             class="w-full mt-3 mb-3">
                         <template #dropdownicon>
@@ -148,19 +187,23 @@ const setChartOptions = () => {
 
                 <FloatLabel variant="on">
                     <InputNumber id="max_pool_size"
-                                 :max="65535" :min="1"
+                                 v-model="connectionPoolMaxPoolSize"
+                                 :max="65535"
+                                 :min="1"
                                  :useGrouping="false"
                                  class="w-full mt-3 mb-3"></InputNumber>
                     <label for="max_pool_size">Max pool size</label>
                 </FloatLabel>
                 <FloatLabel variant="on">
                     <InputNumber id="fill_interval"
+                                 v-model="connectionPoolFillInterval"
                                  :max="60" :min="0" :useGrouping="false"
                                  class="w-full mt-3 mb-3"></InputNumber>
                     <label for="fill_interval">Fill interval</label>
                 </FloatLabel>
                 <FloatLabel variant="on">
                     <InputNumber id="check_interval"
+                                 v-model="connectionPoolCheckInterval"
                                  :max="60" :min="0" :useGrouping="false"
                                  class="w-full mt-3 mb-3"></InputNumber>
                     <label for="check_interval">Check interval</label>
@@ -176,8 +219,8 @@ const setChartOptions = () => {
         </Panel>
 
         <Panel class="w-full" header="Log console" toggleable>
-            <DataTable :value="logEvents">
-                <Column field="level" header="Level"></Column>
+            <DataTable :value="logEvents" show-gridlines>
+                <Column class="w-1/12" field="level" header="Level"></Column>
                 <Column field="message" header="Message"></Column>
             </DataTable>
 
@@ -185,10 +228,12 @@ const setChartOptions = () => {
 
         <Panel class="w-full">
             <div class="flex justify-center items-center content-center gap-4">
-                <Button class="w-29 uppercase" label="Start"></Button>
-                <Button class="w-29 uppercase" label="Stop"></Button>
-                <Button class="w-36 uppercase"
-                        label="Import user"></Button>
+                <Button class="w-29 uppercase" label="Start"
+                        @click="startAgent"></Button>
+                <Button class="w-29 uppercase" label="Stop"
+                        @click="stopAgent"></Button>
+                <Button class="w-38 uppercase"
+                        label="Import users" @click="importUsers"></Button>
             </div>
         </Panel>
 
