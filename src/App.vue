@@ -12,6 +12,7 @@ import {
 import Chart from "primevue/chart";
 import {onMounted, ref} from "vue";
 import Column from 'primevue/column';
+import { invoke } from '@tauri-apps/api/core';
 import {UserInfo} from "./bo/user.ts";
 import {LogLevel} from "./bo/common.ts";
 import {LogInfoEvent} from "./bo/event.ts";
@@ -19,6 +20,7 @@ import {
     Configuration,
     ConnectionPoolConfiguration
 } from "./bo/configuration.ts";
+
 
 let agentServerPort = ref<number>(10080);
 let workerThreadNumber = ref<number>(128);
@@ -45,6 +47,9 @@ function startAgent() {
         selectedMaxLogLevel.value,
         connectionPoolConfiguration
     );
+    invoke("start_agent", {
+        configuration: configuration
+    });
     console.log(configuration)
 }
 
