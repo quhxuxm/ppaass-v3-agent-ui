@@ -6,7 +6,8 @@ import {
     FloatLabel,
     InputNumber,
     Panel,
-    Select
+    Select,
+    Menubar
 } from "primevue";
 import Chart from "primevue/chart";
 import {onMounted, ref} from "vue";
@@ -121,22 +122,27 @@ const setChartOptions = () => {
 </script>
 
 <template>
+    <Menubar>
+        <template #start>
+            <Avatar class="mr-3" icon="pi pi-user"
+                    size="large" shape="circle"/>
+            <h1 class="font-bold">Ppaass Agent</h1>
+        </template>
+        <template #end>
+            <div v-if="selectedUser"
+                 class="flex flex-col items-end">
+                <div class="uppercase font-bold">Remote server</div>
+                <div>{{ selectedUser.proxyAddress }}</div>
+            </div>
+        </template>
+
+    </Menubar>
     <main
         class="p-3 min-w-120 grid grid-cols-1 gap-3">
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <Panel class="w-full" header="User information">
-                <div
-                    class="flex flex-row flex-wrap justify-items-start items-start">
-                    <Avatar class="mr-3" icon="pi pi-user"
-                            size="xlarge"/>
-                    <div v-if="selectedUser"
-                         class="flex flex-col">
-                        <div class="uppercase font-bold">Remote server</div>
-                        <div>{{ selectedUser.proxyAddress }}</div>
-                    </div>
-                </div>
-            </Panel>
-            <Panel class="w-full" header="User configuration">
+
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+
+            <Panel class="w-full" header="Select user">
                 <FloatLabel variant="on">
                     <Select id="select_user" v-model="selectedUser"
                             :options="userSelectOptions"
@@ -182,7 +188,7 @@ const setChartOptions = () => {
                 </FloatLabel>
 
             </Panel>
-            <Panel class="w-full"
+            <Panel class="w-full md:col-span-2  lg:col-span-1"
                    header="Connection pool configuration">
 
                 <FloatLabel variant="on">
@@ -211,31 +217,32 @@ const setChartOptions = () => {
             </Panel>
         </div>
 
+        <div class="grid grid-cols-1 gap-3">
+            <Panel class="w-full"
+                   header="Download/Upload speed" toggleable>
+                <Chart :data="chartData" :options="chartOptions"
+                       class="w-full h-[20rem]" type="line"/>
+            </Panel>
 
-        <Panel class="w-full"
-               header="Download/Upload speed" toggleable>
-            <Chart :data="chartData" :options="chartOptions"
-                   class="w-full h-[20rem]" type="line"/>
-        </Panel>
+            <Panel class="w-full" header="Log console" toggleable>
+                <DataTable :value="logEvents" show-gridlines>
+                    <Column class="w-1/12" field="level" header="Level"></Column>
+                    <Column field="message" header="Message"></Column>
+                </DataTable>
 
-        <Panel class="w-full" header="Log console" toggleable>
-            <DataTable :value="logEvents" show-gridlines>
-                <Column class="w-1/12" field="level" header="Level"></Column>
-                <Column field="message" header="Message"></Column>
-            </DataTable>
+            </Panel>
+        </div>
 
-        </Panel>
+        <div class="w-full flex flex-row justify-end gap-4 mt-5">
+            <Button class="w-29 uppercase" label="Start"
+                    @click="startAgent"></Button>
+            <Button class="w-29 uppercase" label="Stop"
+                    @click="stopAgent"></Button>
+            <Button class="w-38 uppercase"
+                    label="Import users" @click="importUsers"></Button>
+        </div>
 
-        <Panel class="w-full">
-            <div class="flex justify-center items-center content-center gap-4">
-                <Button class="w-29 uppercase" label="Start"
-                        @click="startAgent"></Button>
-                <Button class="w-29 uppercase" label="Stop"
-                        @click="stopAgent"></Button>
-                <Button class="w-38 uppercase"
-                        label="Import users" @click="importUsers"></Button>
-            </div>
-        </Panel>
+
 
     </main>
 </template>
